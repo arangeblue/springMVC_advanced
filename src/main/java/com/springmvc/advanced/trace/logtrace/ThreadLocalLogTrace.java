@@ -74,7 +74,7 @@ public class ThreadLocalLogTrace implements LogTrace {
     private void releaseTraceId() {
         TraceId traceId = traceIdHolder.get();
         if (traceId.isFirstLevel()) {
-            traceIdHolder.remove(); //destroy, thread 해당 데이터만 
+            traceIdHolder.remove(); //destroy, thread 해당 데이터만, 스프링은 thread 풀을 사용하는데 마지막에 데이터를 제거해주지 않으면 요청 때 다른 사용자의 정보가 보일 수 있음
         } else {
             traceIdHolder.set(traceId.createPreviousId());
         }
